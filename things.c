@@ -34,7 +34,7 @@ inv_name(THING *obj, bool drop)
     switch (obj->o_type)
     {
     case POTION:
-        nameit(obj, "potion", p_colors[which], &pot_info[which], nullstr);
+        nameit(obj, "potion", pot_info[which].oi_name, &pot_info[which], nullstr);
 when RING:
         nameit(obj, "ring", r_stones[which], &ring_info[which], ring_num);
 when STICK:
