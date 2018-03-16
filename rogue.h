@@ -27,7 +27,7 @@
 #define AMULETLEVEL	26
 #define	NUMTHINGS	7	/* number of types of things */
 #define MAXPASS		13	/* upper limit on number of passages */
-#define	NUMLINES	24
+#define	NUMLINES	30
 #define	NUMCOLS		80
 #define STATLINE		(NUMLINES - 1)
 #define BORE_LEVEL	50

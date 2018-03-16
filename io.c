@@ -179,6 +179,8 @@ status()
     static int s_arm = 0;
     static str_t s_str = 0;
     static int s_exp = 0;
+    static char s_cur_armor = ' ';
+    static char s_cur_weapon = ' ';
     static char *state_name[] =
     {
         "", "Hungry", "Weak", "Faint"
@@ -192,6 +194,8 @@ status()
     if (s_hp == pstats.s_hpt && s_exp == pstats.s_exp && s_pur == purse
             && s_arm == temp && s_str == pstats.s_str && s_lvl == level
             && s_hungry == hungry_state
+            && s_cur_armor == cur_armor->o_packch
+            && s_cur_weapon == cur_weapon->o_packch
             && !stat_msg
        )
         return;
@@ -216,23 +220,32 @@ status()
     s_str = pstats.s_str;
     s_exp = pstats.s_exp;
     s_hungry = hungry_state;
+    s_cur_weapon = cur_weapon->o_packch;
+    s_cur_armor = cur_armor->o_packch;
+
+    static char s_weapon[50] = "";
+    sprintf(s_weapon, "%c) %s", s_cur_weapon, inv_name(cur_weapon, TRUE));
+
+    static char s_armor[50] = "";
+    sprintf(s_armor, "%c) %s", s_cur_armor, inv_name(cur_armor, TRUE));
 
     if (stat_msg)
     {
         move(0, 0);
-        msg("Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %2d(%d)  Arm: %-2d  Exp: %d/%ld  %s",
+
+        msg("Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %2d(%d)  Arm: %-2d  Exp: %d/%ld  %s\n%s\n%s",
             level, purse, hpwidth, pstats.s_hpt, hpwidth, max_hp, pstats.s_str,
             max_stats.s_str, 10 - s_arm, pstats.s_lvl, pstats.s_exp,
-            state_name[hungry_state]);
+            state_name[hungry_state], s_weapon, s_armor);
     }
     else
     {
         move(STATLINE, 0);
 
-        printw("Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %2d(%d)  Arm: %-2d  Exp: %d/%d  %s",
+        printw("Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %2d(%d)  Arm: %-2d  Exp: %d/%d  %s\n%s\n%s",
                level, purse, hpwidth, pstats.s_hpt, hpwidth, max_hp, pstats.s_str,
                max_stats.s_str, 10 - s_arm, pstats.s_lvl, pstats.s_exp,
-               state_name[hungry_state]);
+               state_name[hungry_state], s_weapon, s_armor);
     }
 
     clrtoeol();
